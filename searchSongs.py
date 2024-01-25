@@ -1,0 +1,2 @@
+def znajdzUtwor(cecha):
+

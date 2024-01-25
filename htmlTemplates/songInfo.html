@@ -1,0 +1,27 @@
+
+<!DOCTYPE html>
+<html lang="en">
+	<div class="login">
+		<div class="login-screen">
+			<div class="app-title">
+				<h1>Wpisz piosenkę lub artystę na którego temat chcesz uzyskać informacje</h1>
+			</div>
+            <form method = "POST" action="/songInfo">
+                <label class="zasob-field-icon fui-zasob" for="zasob"></label>
+					<input type="text" placeholder="podaj zasób" name="zasob" id="zasob" required>
+                <button type="submit" id="infoButton" value="Wyszukaj"> Wyszukaj</button>
+            </form>
+                 <h4 id="tytul">{{ title }} </h4>
+            <div id="text">{{ text }} </div>
+            </div>
+        </div>
+   </div>
+<!--<script>-->
+<!--const button = document.getElementById('genreButton');-->
+<!--button.addEventListener('click', () => {-->
+<!--    fetch('/genreRecommendation')-->
+<!--        .then(response => response.text())-->
+<!--        .then(text => console.log(text));-->
+<!--});-->
+<!--</script>-->
+</html>
