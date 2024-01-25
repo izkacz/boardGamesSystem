@@ -3,9 +3,8 @@ import json
 from flask import Flask, redirect, url_for, request, Response, jsonify, render_template
 import csv
 
+from gameInfo import uzyskajInformacje
 from recommendation import genre_choosing
-from searchSongs import znajdzUtwor
-from songInfo import uzyskajInformacje
 
 app = Flask(
   __name__,
@@ -28,7 +27,7 @@ def notFound(error=None):
 
 @app.route("/makeWishlist")
 def wishList():
-    return render_template('makePlaylist.html')
+    return render_template('makeWishlist.html')
 
 @app.route("/recommendation")
 def rekomendacja():
@@ -36,19 +35,14 @@ def rekomendacja():
 
 @app.route("/searchGame", methods=['GET','POST'])
 def poszukajGry():
-    if request.method == 'POST':
-        cecha = request.args.get('cecha')
-        piosenka = znajdzUtwor(cecha)
-        return render_template('searchSongs.html', piosenka=piosenka)
-    else:
-        return render_template('searchSongs.html')
+        return render_template('searchGame.html')
 
 @app.route("/genreRecommendation", methods=['GET','POST'])
 def rekomendacjaPoGatunku():
     if request.method == 'GET':
        genre = request.args.get('genre')
-       songs = genre_choosing(genre)
-       return render_template('genreRecommendation.html', songs=songs)
+       games = genre_choosing(genre)
+       return render_template('genreRecommendation.html', games=games)
     else:
         return render_template('genreRecommendation.html')
 
@@ -58,13 +52,13 @@ def rekomendacjaPoGatunku():
 
 @app.route("/gameRecommendation", methods=['POST'])
 def rekomendacjaPoGrze():
-    return render_template('songRecommendation.html')
+    return render_template('gameRecommendation.html')
 
 @app.route("/gameInfo", methods=['GET','POST'])
 def informacjeOGrze():
     if request.method == 'POST':
        zasob = request.form.get('zasob')
        title, text = uzyskajInformacje(zasob)
-       return render_template('songInfo.html', title=title,text=text)
+       return render_template('gameInfo.html', title=title,text=text)
     else:
-        return render_template('songInfo.html')
+        return render_template('gameInfo.html')
