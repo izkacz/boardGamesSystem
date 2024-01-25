@@ -35,7 +35,7 @@ def rekomendacja():
     return render_template('recommendation.html')
 
 @app.route("/searchGame", methods=['GET','POST'])
-def poszukajPiosenki():
+def poszukajGry():
     if request.method == 'POST':
         cecha = request.args.get('cecha')
         piosenka = znajdzUtwor(cecha)
@@ -52,16 +52,16 @@ def rekomendacjaPoGatunku():
     else:
         return render_template('genreRecommendation.html')
 
-@app.route("/artistRecommendation", methods=['POST'])
-def rekomendacjaPoArtyscie():
-    return render_template('artistRecommendation.html')
+# @app.route("/artistRecommendation", methods=['POST'])
+# def rekomendacjaPoArtyscie():
+#     return render_template('artistRecommendation.html')
 
 @app.route("/gameRecommendation", methods=['POST'])
-def rekomendacjaPoPiosence():
+def rekomendacjaPoGrze():
     return render_template('songRecommendation.html')
 
 @app.route("/gameInfo", methods=['GET','POST'])
-def informacjeOPiosence():
+def informacjeOGrze():
     if request.method == 'POST':
        zasob = request.form.get('zasob')
        title, text = uzyskajInformacje(zasob)
