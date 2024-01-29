@@ -1,4 +1,3 @@
-import json
 
 from flask import Flask, redirect, url_for, request, Response, jsonify, render_template
 import csv
