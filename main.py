@@ -3,7 +3,7 @@ import json
 from flask import Flask, redirect, url_for, request, Response, jsonify, render_template
 import csv
 
-from gameInfo import uzyskajInformacje
+from gameInfo import uzyskajInformacje, checkSpelling
 from recommendation import genre_choosing
 
 app = Flask(
@@ -56,9 +56,14 @@ def rekomendacjaPoGrze():
 
 @app.route("/gameInfo", methods=['GET','POST'])
 def informacjeOGrze():
-    if request.method == 'GET':
-       zasob = request.args.get('zasob')
-       title, text = uzyskajInformacje(zasob)
-       return render_template('gameWikiInfo.html', title=title, text=text)
+    if request.method == 'POST':
+       zasob = request.form.get('zasob')
+       slowo = checkSpelling(zasob)
+       if slowo == zasob:
+          title, text = uzyskajInformacje(zasob)
+          return render_template('gameWikiInfo.html', title=title, text=text)
+       else:
+           return render_template('gameWikiInfo.html', slowo=slowo)
     else:
        return render_template('gameWikiInfo.html')
+

@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 	<div class="login">
@@ -6,14 +5,16 @@
 			<div class="app-title">
 				<h1>Podaj grę o której chcesz uzyskać informacje</h1>
 			</div>
-            <form method = "GET" action="/gameInfo">
+            <form method = "POST" action="/gameInfo">
                 <label class="zasob-field-icon fui-zasob" for="zasob"></label>
 					<input type="text" placeholder="podaj nazwę gry" name="zasob" id="zasob" required>
                 <button type="submit" id="infoButton" value="Wyszukaj"> Wyszukaj</button>
             </form>
+                 <h4 id="slowo"> Czy miałeś na myśli {{ slowo }} ? </h4>
                  <h4 id="tytul">{{ title }} </h4>
             <div id="text">{{ text }} </div>
             </div>
         </div>
    </div>
 </html>
+
