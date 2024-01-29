@@ -4,7 +4,7 @@ from flask import Flask, redirect, url_for, request, Response, jsonify, render_t
 import csv
 
 from gameInfo import uzyskajInformacje
-from recommendation import genre_choosing
+from recommendation import genre_choosing, title_recommendation, description_recommendation
 
 app = Flask(
   __name__,
@@ -29,9 +29,27 @@ def notFound(error=None):
 def wishList():
     return render_template('makeWishlist.html')
 
-@app.route("/recommendation")
+@app.route("/titleRecommendation")
+def rekomendacjaPoTytule():
+    if request.method == 'GET':
+        title = request.args.get('title')
+        games = title_recommendation(title)
+        return render_template('recommendation.html', tables=[games.to_html(classes='data', index=False)], titles=games.columns.values)
+    else:
+        return render_template('recommendation.html')
+
+@app.route("/recommendation", methods=['GET'])
 def rekomendacja():
     return render_template('recommendation.html')
+
+@app.route("/descriptionRecommendation")
+def rekomendacjaPoOpisie():
+    if request.method == 'GET':
+        title = request.args.get('description')
+        games = description_recommendation(title)
+        return render_template('recommendation.html', tables=[games.to_html(classes='data', index=False)], titles=games.columns.values)
+    else:
+        return render_template('recommendation.html')
 
 @app.route("/searchGame", methods=['GET','POST'])
 def poszukajGry():
