@@ -1,17 +1,22 @@
 from urllib.request import urlopen
 import os
-from nltk import word_tokenize
+
+import nltk
+from nltk.tokenize import word_tokenize
+nltk.download('punkt')
 import itertools
 import pandas as pd
 import requests
 from bs4 import BeautifulSoup
 import random
-
+dataset = pd.read_csv('basic_data.csv')
+df = dataset[['name']]
 def uzyskajInformacje(zasob):
-    url = "https://pl.wikipedia.org/wiki/"
+    url = "https://en.wikipedia.org/wiki/"
     if " " in zasob:
         zasob = zasob.replace(" ", "_")
     newUrl = url + zasob
+    print(newUrl)
     page = urlopen(newUrl)
     html = page.read().decode("utf-8")
     soup = BeautifulSoup(html, "html.parser")
@@ -30,12 +35,13 @@ def uzyskajInformacje(zasob):
         newRow = newRow.replace(']', '')
         newRow = newRow.replace("'", '')
         textList.append(newRow)
+
     return title, textList
 
 def getPlainVocabulary():
-    sentencess = [word_tokenize(sentence['Sentence']) for index, sentence in sentences_df.iterrows()]
-    mergesentences = list(itertools.chain.from_iterable(sentencess))
-    plainvocabulary = list(set(mergesentences))
+    names = [word_tokenize(name['name']) for index, name in df.iterrows()]
+    mergeNames = list(itertools.chain.from_iterable(names))
+    plainvocabulary = list(set(mergeNames))
     return plainvocabulary
 
 def levenshtein_distance(s1, s2):
@@ -51,15 +57,22 @@ def levenshtein_distance(s1, s2):
                 distances_.append(1 + min((distances[i1], distances[i1 + 1], distances_[-1])))
         distances = distances_
     return distances[-1]
-def spelling_correction(sentence):
-    splittedsentence = word_tokenize(sentence)
+def spelling_correction(name):
+    splittedName = word_tokenize(name)
     vocwords = list(itertools.chain.from_iterable([getPlainVocabulary()]))
-    for i,word in enumerate(splittedsentence):
+    for i,word in enumerate(splittedName):
         if (word not in vocwords and not word.isdigit()): # ignore digits
             levdistances = []
             for vocword in vocwords:
                 levdistances.append(levenshtein_distance(word,vocword))
-            splittedsentence[i] = vocwords[levdistances.index(min(levdistances))]
+            splittedName[i] = vocwords[levdistances.index(min(levdistances))]
         else:
-            splittedsentence[i] = word
-    return ' '.join(splittedsentence)
+            splittedName[i] = word
+    return ' '.join(splittedName)
+def checkSpelling(gra):
+    wlasciweSlowo = spelling_correction(gra)
+    print(wlasciweSlowo)
+    if gra == wlasciweSlowo:
+        return gra
+    else:
+        return wlasciweSlowo
