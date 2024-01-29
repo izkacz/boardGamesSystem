@@ -51,7 +51,7 @@ def rekomendacjaPoOpisie():
     else:
         return render_template('recommendation.html')
 
-@app.route("/searchGame", methods=['GET','POST'])
+@app.route("/searchGames", methods=['GET','POST'])
 def poszukajGry():
         return render_template('searchGames.html')
 
@@ -77,6 +77,6 @@ def informacjeOGrze():
     if request.method == 'GET':
        zasob = request.args.get('zasob')
        title, text = uzyskajInformacje(zasob)
-       return render_template('gameInfo.html', title=title,text=text)
+       return render_template('gameWikiInfo.html', title=title, text=text)
     else:
-        return render_template('gameInfo.html')
+       return render_template('gameWikiInfo.html')
