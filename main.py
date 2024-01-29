@@ -35,7 +35,7 @@ def rekomendacja():
 
 @app.route("/searchGame", methods=['GET','POST'])
 def poszukajGry():
-        return render_template('searchGame.html')
+        return render_template('searchGames.html')
 
 @app.route("/genreRecommendation", methods=['GET','POST'])
 def rekomendacjaPoGatunku():
@@ -56,8 +56,8 @@ def rekomendacjaPoGrze():
 
 @app.route("/gameInfo", methods=['GET','POST'])
 def informacjeOGrze():
-    if request.method == 'POST':
-       zasob = request.form.get('zasob')
+    if request.method == 'GET':
+       zasob = request.args.get('zasob')
        title, text = uzyskajInformacje(zasob)
        return render_template('gameInfo.html', title=title,text=text)
     else:

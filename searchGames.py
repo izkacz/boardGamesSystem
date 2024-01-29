@@ -1,0 +1,3 @@
+def znajdzGre(cecha):
+    pass
+
