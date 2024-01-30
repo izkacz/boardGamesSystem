@@ -1,8 +1,8 @@
 
+import pandas as pd
 from flask import Flask, request,  jsonify, render_template
-
 from gameInfo import uzyskajInformacje, checkSpelling, makePrediction
-from recommendation import genre_choosing, title_recommendation, description_recommendation
+from recommendation import genre_choosing, title_recommendation, description_recommendation, filter_recommendations
 
 app = Flask(
   __name__,
@@ -32,7 +32,7 @@ def rekomendacjaPoTytule():
     if request.method == 'GET':
         title = request.args.get('title')
         games = title_recommendation(title)
-        return render_template('recommendation.html', tables=[games.to_html(classes='data', index=False)], titles=games.columns.values)
+        return render_template('recommendation.html', tables=[games.to_html(classes='data', index=False)], titles=games.columns.values, title=title)
     else:
         return render_template('recommendation.html')
 
@@ -43,9 +43,31 @@ def rekomendacja():
 @app.route("/descriptionRecommendation")
 def rekomendacjaPoOpisie():
     if request.method == 'GET':
-        title = request.args.get('description')
-        games = description_recommendation(title)
-        return render_template('recommendation.html', tables=[games.to_html(classes='data', index=False)], titles=games.columns.values)
+        description = request.args.get('description')
+        games = description_recommendation(description)
+        return render_template('recommendation.html', tables=[games.to_html(classes='data', index=False)],
+                               titles=games.columns.values, description=description)
+    else:
+        return render_template('recommendation.html')
+
+@app.route("/filterRecommendations")
+def filtrowanieRekomendacji():
+    if request.method == 'GET':
+        filtered_games = pd.DataFrame()
+        filter = request.args.get('filter')
+        description = request.args.get('hiddenDescription')
+        title = request.args.get('hiddenTitle')
+        if title:
+            games = title_recommendation(title)
+            filtered_games = filter_recommendations(filter, games)
+        elif description:
+            games = description_recommendation(description)
+            filtered_games = filter_recommendations(filter, games)
+        return render_template('recommendation.html',
+                               tables=[filtered_games.to_html(classes='data', index=False)],
+                               titles=filtered_games.columns.values,
+                               filter=filter,
+                               title=title, description=description)
     else:
         return render_template('recommendation.html')
 
