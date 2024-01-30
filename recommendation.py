@@ -1,18 +1,7 @@
-import time
-from urllib.parse import urljoin
-from urllib.request import urlopen
-
 import pandas as pd
-
-from flask import request
-import csv
 import string
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
-
-def makeRecommendation():
-    return
-
 
 def genre_choosing(genre):
     df = pd.read_csv('categories_data.csv')

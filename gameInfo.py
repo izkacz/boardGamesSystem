@@ -1,23 +1,28 @@
+import urllib
+from urllib.error import HTTPError
 from urllib.request import urlopen
-import os
-
 import nltk
 from nltk.tokenize import word_tokenize
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split
 nltk.download('punkt')
 import itertools
 import pandas as pd
-import requests
 from bs4 import BeautifulSoup
-import random
 dataset = pd.read_csv('basic_data.csv')
 df = dataset[['name']]
 def uzyskajInformacje(zasob):
     url = "https://en.wikipedia.org/wiki/"
     if " " in zasob:
         zasob = zasob.replace(" ", "_")
-    newUrl = url + zasob
-    print(newUrl)
-    page = urlopen(newUrl)
+    try:
+        newUrl = url + zasob + "_(board_game)"
+        print(newUrl)
+        page = urlopen(newUrl)
+    except urllib.error.HTTPError as err:
+        newUrl = url + zasob
+        print(newUrl)
+        page = urlopen(newUrl)
     html = page.read().decode("utf-8")
     soup = BeautifulSoup(html, "html.parser")
     title = soup.find(id="firstHeading")
@@ -61,7 +66,7 @@ def spelling_correction(name):
     splittedName = word_tokenize(name)
     vocwords = list(itertools.chain.from_iterable([getPlainVocabulary()]))
     for i,word in enumerate(splittedName):
-        if (word not in vocwords and not word.isdigit()): # ignore digits
+        if (word not in vocwords and not word.isdigit()):
             levdistances = []
             for vocword in vocwords:
                 levdistances.append(levenshtein_distance(word,vocword))
@@ -76,3 +81,27 @@ def checkSpelling(gra):
         return gra
     else:
         return wlasciweSlowo
+
+def predictAndTrain():
+    df = pd.read_csv('gamesForClassificationReady.csv')
+    df = df.drop(columns=['Unnamed: 0','bggrank'])
+    df_X = df.drop(columns=['genre', 'name', 'description'])
+    X = df_X
+    Y = df['genre']
+    X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size=0.2)
+    RFC_Model = RandomForestClassifier(n_estimators=100)
+    RFC_Model.fit(X_train, y_train)
+    df6 = df.drop(columns=['genre'])
+    return df_X,df6,RFC_Model
+
+def makePrediction(game):
+    df_X,df6,RFC_Model =predictAndTrain()
+    for row, column in df6.iterrows():
+        if df6.loc[row]['name']==game:
+            x=df_X.iloc[row]
+            xdf=x.to_frame().transpose()
+            genre=RFC_Model.predict(xdf)
+            if genre == 'None':
+                genre='Nie można przewidzieć gatunku'
+            return genre
+

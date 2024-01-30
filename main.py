@@ -1,9 +1,7 @@
-import json
 
-from flask import Flask, redirect, url_for, request, Response, jsonify, render_template
-import csv
+from flask import Flask, request,  jsonify, render_template
 
-from gameInfo import uzyskajInformacje, checkSpelling
+from gameInfo import uzyskajInformacje, checkSpelling, makePrediction
 from recommendation import genre_choosing, title_recommendation, description_recommendation
 
 app = Flask(
@@ -79,7 +77,8 @@ def informacjeOGrze():
        slowo = checkSpelling(zasob)
        if slowo == zasob:
           title, text = uzyskajInformacje(zasob)
-          return render_template('gameWikiInfo.html', title=title, text=text)
+          genre=makePrediction(zasob)
+          return render_template('gameWikiInfo.html', title=title, text=text, genre=genre)
        else:
            return render_template('gameWikiInfo.html', slowo=slowo)
     else:
