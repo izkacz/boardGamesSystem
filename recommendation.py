@@ -9,6 +9,10 @@ import csv
 import string
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
+import re
+import matplotlib.pyplot as plt
+from io import BytesIO
+import base64
 
 def makeRecommendation():
     return
@@ -89,7 +93,8 @@ def title_recommendation(title):
                 break
 
     recommended_games = df.iloc[unique_recommendations][['name', 'description']]
-    recommended_games['description'] = recommended_games['description'].replace('<br/><br/>', ' ')
+    recommended_games['description'] = recommended_games['description'].str.replace('<br/>', ' ')
+    recommended_games.rename(columns={'name': 'Tytuł', 'description': 'Opis'}, inplace=True)
     return recommended_games
 
 
@@ -119,5 +124,16 @@ def description_recommendation(description):
                 break
 
     recommended_games = df.iloc[unique_recommendations][['name', 'description']]
-    recommended_games['description'] = recommended_games['description'].replace('<br/><br/>', ' ')
+    recommended_games['description'] = recommended_games['description'].str.replace('<br/>', ' ')
+    recommended_games.rename(columns={'name': 'Tytuł', 'description': 'Opis'}, inplace=True)
     return recommended_games
+
+def filter_recommendations(filter, games):
+    regexp = re.compile(r'(?i){}'.format(re.escape(filter)))
+    def pattern_match(value):
+        return bool(re.search(regexp, str(value)))
+
+    matching_rows = games.applymap(pattern_match)
+    matching_indecies = matching_rows.index[matching_rows.any(axis=1)].tolist()
+    filtered_games = games.loc[matching_indecies]
+    return filtered_games
