@@ -20,6 +20,13 @@
                     <button type="submit" value="descriptionButton" class="btn btn-primary btn-large btn-block">Wyszukaj po opisie</button>
                 </form>
             </div>
+            <div class="control-group">
+                <form action="/genreRecommendation" method="GET" id="genreForm">
+                    <label class="genre-field-icon fui-genre" for="description"></label>
+					    <input type="text" placeholder="Wpisz gatunek" name="genre" id="genre" value="{{ genre }}" required>
+                    <button type="submit" value="genreButton" class="btn btn-primary btn-large btn-block">Wyszukaj po gatunku</button>
+                </form>
+            </div>
             <style>
                 table.dataframe th {
                     text-align: left;

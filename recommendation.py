@@ -15,7 +15,7 @@ def genre_choosing(genre):
     for index, row in df.iterrows():
         if row[genre] == 1:
             gamesVotes.append(row['bayes_rating'])
-            if len(gamesVotes) == 1:
+            if len(gamesVotes) == 3:
                 break
     for vote in gamesVotes:
         for index, row in df2.iterrows():
