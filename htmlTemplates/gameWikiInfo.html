@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+    <body>
 	<div class="login">
 		<div class="login-screen">
 			<div class="app-title">
@@ -10,12 +11,36 @@
 					<input type="text" placeholder="podaj nazwę gry" name="zasob" id="zasob" required>
                 <button type="submit" id="infoButton" value="Wyszukaj"> Wyszukaj</button>
             </form>
-                 <h4 id="slowo"> Czy miałeś na myśli {{ slowo }} ? </h4>
+                 <h4 id="slowo" color ='red'> Czy miałeś na myśli {{ slowo }} </h4>
+            <button id="button1" style="display:none">Tak</button>
+            <button id="button2" style="display:none">Nie</button>
+
                  <h4 id="tytul">{{ title }} </h4>
             <div id="text">{{ text }} </div>
             <h4 id="genre">Gra prawdopodobnie należy do gatunku: {{ genre }} </h4>
             </div>
         </div>
    </div>
+
+ <script>
+    function checkElementValue() {
+      var targetElement = document.getElementById('slowo');
+      var wartosc = document.getElementById('zasob')
+      var button1 = document.getElementById('button1');
+      var button2 = document.getElementById('button2');
+
+      if (targetElement.textContent.includes('Die Macher')) {
+        button1.style.display = 'block';
+        button2.style.display = 'block';
+      } else {
+        button1.style.display = 'none';
+        button2.style.display = 'none';
+      }
+    }
+
+    document.getElementById('targetElement').addEventListener('change', checkElementValue);
+    checkElementValue();
+  </script>
+</body>
 </html>
 

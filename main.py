@@ -23,9 +23,6 @@ def notFound(error=None):
     resp.status_code = 404
     return resp
 
-@app.route("/makeWishlist")
-def wishList():
-    return render_template('makeWishlist.html')
 
 @app.route("/titleRecommendation")
 def rekomendacjaPoTytule():
@@ -71,10 +68,6 @@ def filtrowanieRekomendacji():
     else:
         return render_template('recommendation.html')
 
-@app.route("/searchGames", methods=['GET','POST'])
-def poszukajGry():
-        return render_template('searchGames.html')
-
 @app.route("/genreRecommendation", methods=['GET','POST'])
 def rekomendacjaPoGatunku():
     if request.method == 'GET':
@@ -83,14 +76,6 @@ def rekomendacjaPoGatunku():
        return render_template('genreRecommendation.html', games=games)
     else:
         return render_template('genreRecommendation.html')
-
-# @app.route("/artistRecommendation", methods=['POST'])
-# def rekomendacjaPoArtyscie():
-#     return render_template('artistRecommendation.html')
-
-@app.route("/gameRecommendation", methods=['POST'])
-def rekomendacjaPoGrze():
-    return render_template('gameRecommendation.html')
 
 @app.route("/gameInfo", methods=['GET','POST'])
 def informacjeOGrze():

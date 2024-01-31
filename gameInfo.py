@@ -26,22 +26,15 @@ def uzyskajInformacje(zasob):
     html = page.read().decode("utf-8")
     soup = BeautifulSoup(html, "html.parser")
     title = soup.find(id="firstHeading")
-    newText = soup.find(id="mw-content-text").find_all("p")
-    textList=[]
+    newText = soup.find(id="mw-content-text").find_all("p")[0].get_text()
+    if not newText:
+        newText = "Brak informacji o grze"
+    if "(board game)" in newText:
+        newText = "Brak informacji o grze"
     for row in title:
         title = row.text
-    for row in newText:
-        newRow = row.text.replace('\n', '')
-        newRow = newRow.replace('[1]', '')
-        newRow = newRow.replace('[2]', '')
-        newRow = newRow.replace('[3]', '')
-        newRow = newRow.replace('[4]', '')
-        newRow = newRow.replace('[', '')
-        newRow = newRow.replace(']', '')
-        newRow = newRow.replace("'", '')
-        textList.append(newRow)
 
-    return title, textList
+    return title, newText
 
 def getPlainVocabulary():
     names = [word_tokenize(name['name']) for index, name in df.iterrows()]
@@ -103,5 +96,5 @@ def makePrediction(game):
             genre=RFC_Model.predict(xdf)
             if genre == 'None':
                 genre='Nie można przewidzieć gatunku'
-            return genre
+            return genre[0]
 
