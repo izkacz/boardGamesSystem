@@ -13,30 +13,32 @@ dataset = pd.read_csv('basic_data.csv')
 df = dataset[['name']]
 def uzyskajInformacje(zasob):
     url = "https://en.wikipedia.org/wiki/"
-    boardGame="_%28board_game%29"
     if " " in zasob:
         zasob = zasob.replace(" ", "_")
     try:
-        zasob = zasob+boardGame
-        newUrl = url + zasob
+        boardGame = "_%28board_game%29"
+        zasobNew = zasob+boardGame
+        newUrl = url + zasobNew
         print(newUrl)
         page = urlopen(newUrl)
-        html = page.read().decode("utf-8")
-        soup = BeautifulSoup(html, "html.parser")
-        title = soup.find(id="firstHeading").find("i")
-        newText = soup.find(id="mw-content-text").find_all("p")[1].get_text()
     except urllib.error.HTTPError as err:
         newUrl = url + zasob
         print(newUrl)
         page = urlopen(newUrl)
+    if newUrl.endswith("_%28board_game%29"):
+        html = page.read().decode("utf-8")
+        soup = BeautifulSoup(html, "html.parser")
+        title = soup.find(id="firstHeading").find("i")
+        newText = soup.find(id="mw-content-text").find_all("p")[1].get_text()
+    else:
         html = page.read().decode("utf-8")
         soup = BeautifulSoup(html, "html.parser")
         title = soup.find(id="firstHeading")
         newText = soup.find(id="mw-content-text").find_all("p")[0].get_text()
     if not newText:
-        newText = "Brak informacji o grze"
+        newText = "No game info available"
     if "(board game)" in newText:
-        newText = "Brak informacji o grze"
+        newText = "No game info available"
     for row in title:
         title = row.text
 
@@ -101,6 +103,6 @@ def makePrediction(game):
             xdf=x.to_frame().transpose()
             genre=RFC_Model.predict(xdf)
             if genre == 'None':
-                genre='Nie można przewidzieć gatunku'
+                genre='Genre cannot be predicted'
             return genre[0]
 

@@ -92,11 +92,11 @@ def informacjeOGrze():
        if slowo == zasob:
           title, text = uzyskajInformacje(zasob)
           genre=makePrediction(zasob)
-          prawd = "Gra prawdopodobnie należy do gatunku: "
-          inneGry = "Inne gry z gatunku"
+          prawd = "This game probably belongs to genre: "
+          inneGry = "Other games from the genre"
           return render_template('gameWikiInfo.html', title=title, text=text, genre=genre, prawd=prawd, inneGry=inneGry)
        else:
-           mysl= "Czy miałeś na myśli: "
+           mysl= "Did you mean: "
            return render_template('gameWikiInfo.html', mysl=mysl, slowo=slowo)
     else:
        return render_template('gameWikiInfo.html')

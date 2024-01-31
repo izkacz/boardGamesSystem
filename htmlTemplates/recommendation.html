@@ -61,26 +61,26 @@
 	<div class="login">
 		<div class="login-screen">
             <span id = "welcomePage">
-            <a href = "\"> Wróć do MENU </a>
+            <a href = "\"> Back to MENU </a>
             </span>
 			<div class="app-title">
-				<h1>Na jakiej podstawie chciałbyś otrzymać rekomendacje?</h1>
+				<h1>On what basis would you like to receive recommendations?</h1>
 			</div>
             <div class="control-group">
                 <form action="/titleRecommendation" method="GET" id="titleForm">
                     <label class="genre-field-icon fui-genre" for="title"></label>
-					    <input type="text" placeholder="Wpisz tytuł" name="title" id="title" value="{{ title }}" required>
-                    <button type="submit" value="titleButton" class="btn btn-primary btn-large btn-block">Wyszukaj po tytule</button>
+					    <input type="text" placeholder="Title here" name="title" id="title" value="{{ title }}" required>
+                    <button type="submit" value="titleButton" class="btn btn-primary btn-large btn-block">Search by title</button>
                 </form>
                 <form action="/descriptionRecommendation" method="GET" id="descriptionForm">
                     <label class="genre-field-icon fui-genre" for="description"></label>
-					    <input type="text" placeholder="Wpisz opis" name="description" id="description" value="{{ description }}" required>
-                    <button type="submit" value="descriptionButton" class="btn btn-primary btn-large btn-block">Wyszukaj po opisie</button>
+					    <input type="text" placeholder="Description here" name="description" id="description" value="{{ description }}" required>
+                    <button type="submit" value="descriptionButton" class="btn btn-primary btn-large btn-block">Search by description</button>
                 </form>
                 <form action="/genreRecommendation" method="GET" id="genreForm">
                     <label class="genre-field-icon fui-genre" for="genre"></label>
-					    <input type="text" placeholder="Wpisz gatunek" name="genre" id="genre" value="{{ genre }}" required>
-                    <button type="submit" value="genreButton" class="btn btn-primary btn-large btn-block">Wyszukaj po gatunku</button>
+					    <input type="text" placeholder="Genre here" name="genre" id="genre" value="{{ genre }}" required>
+                    <button type="submit" value="genreButton" class="btn btn-primary btn-large btn-block">Search by genre</button>
                 </form>
             </div>
             <style>
@@ -88,15 +88,15 @@
                     text-align: left;
                 }
             </style>
-            <h2>Rekomendacje: </h2>
+            <h2>Recommendations: </h2>
             <div>
                 <form action="/filterRecommendations" method="GET" onsubmit="updateHiddenFields()">
                     <label class="genre-field-icon fui-genre" for="filter"></label>
-					    <input type="text" placeholder="Filtruj..." name="filter" id="filter" value="{{ filter }}" required>
+					    <input type="text" placeholder="Filter..." name="filter" id="filter" value="{{ filter }}" required>
                         <input type="hidden" name="hiddenTitle" id="hiddenTitle">
                         <input type="hidden" name="hiddenDescription" id="hiddenDescription">
                         <input type="hidden" name="hiddenGenre" id="hiddenGenre">
-                    <button type="submit" value="filterButton" class="btn btn-primary btn-large btn-block">Zastosuj</button>
+                    <button type="submit" value="filterButton" class="btn btn-primary btn-large btn-block">Apply</button>
                 </form>
             </div>
                  {% for title in titles %}

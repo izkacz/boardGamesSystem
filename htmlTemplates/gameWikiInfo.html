@@ -53,20 +53,17 @@
 	<div class="login">
 		<div class="login-screen">
             <span id = "welcomePage">
-            <a href = "\"> Wróć do MENU </a>
+            <a href = "\"> Back to MENU </a>
             </span>
 			<div class="app-title">
-				<h1>Podaj grę o której chcesz uzyskać informacje:</h1>
+				<h1>What game would you like to know about?</h1>
 			</div>
             <form method = "POST" action="/gameInfo">
                 <label class="zasob-field-icon fui-zasob" for="zasob"></label>
-					<input type="text" placeholder="Podaj nazwę gry" name="zasob" id="zasob" required>
-                <button type="submit" id="infoButton" value="Wyszukaj"> Wyszukaj</button>
+					<input type="text" placeholder="Game name here" name="zasob" id="zasob" required>
+                <button type="submit" id="infoButton" value="Search"> Wyszukaj</button>
             </form>
                  <h4 id="slowo" color ='red'> {{mysl}} {{ slowo }} </h4>
-            <button id="button1" style="display:none">Tak</button>
-            <button id="button2" style="display:none">Nie</button>
-
                  <h4 id="tytul">{{ title }} </h4>
             <div id="text">{{ text }} </div>
             <h4 id="genre">{{prawd}} {{ genre }} </h4>
@@ -74,26 +71,6 @@
             </div>
         </div>
    </div>
-
- <script>
-    function checkElementValue() {
-      var targetElement = document.getElementById('slowo');
-      var wartosc = document.getElementById('zasob')
-      var button1 = document.getElementById('button1');
-      var button2 = document.getElementById('button2');
-
-      if (targetElement.textContent.includes('Die Macher')) {
-        button1.style.display = 'block';
-        button2.style.display = 'block';
-      } else {
-        button1.style.display = 'none';
-        button2.style.display = 'none';
-      }
-    }
-
-    document.getElementById('targetElement').addEventListener('change', checkElementValue);
-    checkElementValue();
-  </script>
 </body>
 </html>
 
