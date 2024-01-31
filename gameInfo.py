@@ -13,20 +13,26 @@ dataset = pd.read_csv('basic_data.csv')
 df = dataset[['name']]
 def uzyskajInformacje(zasob):
     url = "https://en.wikipedia.org/wiki/"
+    boardGame="_%28board_game%29"
     if " " in zasob:
         zasob = zasob.replace(" ", "_")
     try:
-        newUrl = url + zasob + "_(board_game)"
+        zasob = zasob+boardGame
+        newUrl = url + zasob
         print(newUrl)
         page = urlopen(newUrl)
+        html = page.read().decode("utf-8")
+        soup = BeautifulSoup(html, "html.parser")
+        title = soup.find(id="firstHeading").find("i")
+        newText = soup.find(id="mw-content-text").find_all("p")[1].get_text()
     except urllib.error.HTTPError as err:
         newUrl = url + zasob
         print(newUrl)
         page = urlopen(newUrl)
-    html = page.read().decode("utf-8")
-    soup = BeautifulSoup(html, "html.parser")
-    title = soup.find(id="firstHeading")
-    newText = soup.find(id="mw-content-text").find_all("p")[0].get_text()
+        html = page.read().decode("utf-8")
+        soup = BeautifulSoup(html, "html.parser")
+        title = soup.find(id="firstHeading")
+        newText = soup.find(id="mw-content-text").find_all("p")[0].get_text()
     if not newText:
         newText = "Brak informacji o grze"
     if "(board game)" in newText:
