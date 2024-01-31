@@ -63,13 +63,14 @@
 					<input type="text" placeholder="Podaj nazwę gry" name="zasob" id="zasob" required>
                 <button type="submit" id="infoButton" value="Wyszukaj"> Wyszukaj</button>
             </form>
-                 <h4 id="slowo" color ='red'> Czy miałeś na myśli {{ slowo }} </h4>
+                 <h4 id="slowo" color ='red'> {{mysl}} {{ slowo }} </h4>
             <button id="button1" style="display:none">Tak</button>
             <button id="button2" style="display:none">Nie</button>
 
                  <h4 id="tytul">{{ title }} </h4>
             <div id="text">{{ text }} </div>
-            <h4 id="genre">Gra prawdopodobnie należy do gatunku: {{ genre }} </h4>
+            <h4 id="genre">{{prawd}} {{ genre }} </h4>
+            <a href ="\genreRecommendation?genre={{genre}} "id="inneGry">{{inneGry}} {{ genre }} </a>
             </div>
         </div>
    </div>
