@@ -11,18 +11,20 @@ def genre_choosing(genre):
     df = pd.read_csv('categories_data.csv')
     df2 = pd.read_csv('basic_data.csv')
     gamesVotes = []
-    gamesTitles = []
+    gamesIndecies = []
     for index, row in df.iterrows():
         if row[genre] == 1:
             gamesVotes.append(row['bayes_rating'])
-            if len(gamesVotes) == 3:
+            if len(gamesVotes) == 7:
                 break
     for vote in gamesVotes:
         for index, row in df2.iterrows():
             if row['bayes_rating'] == vote:
-                gamesTitles.append(row['name'])
-    print(gamesTitles)
-    return gamesTitles[0:]
+                gamesIndecies.append(index)
+    games = df2.iloc[gamesIndecies][['name', 'description']]
+    games['description'] = games['description'].str.replace('<br/>', ' ')
+    games.rename(columns={'name': 'Tytuł', 'description': 'Opis'}, inplace=True)
+    return games
 
     # url = "https://boardgamegeek.com/browse/boardgamecategory"
     # page = urlopen(url)
@@ -78,7 +80,7 @@ def title_recommendation(title):
         if recommended_description not in recommended_list:
             recommended_list.append(recommended_description)
             unique_recommendations.append(index)
-            if len(unique_recommendations) == 10:
+            if len(unique_recommendations) == 7:
                 break
 
     recommended_games = df.iloc[unique_recommendations][['name', 'description']]
@@ -109,7 +111,7 @@ def description_recommendation(description):
         if recommended_description not in recommended_list:
             recommended_list.append(recommended_description)
             unique_recommendations.append(index)
-            if len(unique_recommendations) == 10:
+            if len(unique_recommendations) == 7:
                 break
 
     recommended_games = df.iloc[unique_recommendations][['name', 'description']]

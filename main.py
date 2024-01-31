@@ -54,17 +54,21 @@ def filtrowanieRekomendacji():
         filter = request.args.get('filter')
         description = request.args.get('hiddenDescription')
         title = request.args.get('hiddenTitle')
+        genre = request.args.get('hiddenGenre')
         if title:
             games = title_recommendation(title)
             filtered_games = filter_recommendations(filter, games)
         elif description:
             games = description_recommendation(description)
             filtered_games = filter_recommendations(filter, games)
+        elif genre:
+            games = genre_choosing(genre)
+            filtered_games = filter_recommendations(filter, games)
         return render_template('recommendation.html',
                                tables=[filtered_games.to_html(classes='data', index=False)],
                                titles=filtered_games.columns.values,
                                filter=filter,
-                               title=title, description=description)
+                               title=title, description=description, genre=genre)
     else:
         return render_template('recommendation.html')
 
@@ -73,9 +77,12 @@ def rekomendacjaPoGatunku():
     if request.method == 'GET':
        genre = request.args.get('genre')
        games = genre_choosing(genre)
-       return render_template('genreRecommendation.html', games=games)
+       return render_template('recommendation.html',
+                               tables=[games.to_html(classes='data', index=False)],
+                               titles=games.columns.values,
+                               genre=genre)
     else:
-        return render_template('genreRecommendation.html')
+        return render_template('recommendation.html')
 
 @app.route("/gameInfo", methods=['GET','POST'])
 def informacjeOGrze():

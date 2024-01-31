@@ -95,6 +95,7 @@
 					    <input type="text" placeholder="Filtruj..." name="filter" id="filter" value="{{ filter }}" required>
                         <input type="hidden" name="hiddenTitle" id="hiddenTitle">
                         <input type="hidden" name="hiddenDescription" id="hiddenDescription">
+                        <input type="hidden" name="hiddenGenre" id="hiddenGenre">
                     <button type="submit" value="filterButton" class="btn btn-primary btn-large btn-block">Zastosuj</button>
                 </form>
             </div>
@@ -106,9 +107,11 @@
         function updateHiddenFields() {
             var titleField = document.getElementById('titleForm').elements['title'].value;
             var descriptionField = document.getElementById('descriptionForm').elements['description'].value;
+            var genreField = document.getElementById('genreForm').elements['genre'].value;
 
             document.getElementById('hiddenTitle').value = titleField;
             document.getElementById('hiddenDescription').value = descriptionField;
+            document.getElementById('hiddenGenre').value = genreField;
             return true;
         }
         </script>
