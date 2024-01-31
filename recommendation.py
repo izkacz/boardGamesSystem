@@ -9,7 +9,9 @@ import base64
 
 def genre_choosing(genre):
     df = pd.read_csv('categories_data.csv')
+    df.columns = df.columns.str.lower()
     df2 = pd.read_csv('basic_data.csv')
+    genre = genre.lower()
     gamesVotes = []
     gamesIndecies = []
     for index, row in df.iterrows():
