@@ -1,14 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
+<head>
+    <style>
+        body {
+            font-family: 'Verdana', sans-serif;
+            align-items: center;
+        }
+
+        .app-title h1 {
+            text-align: center;
+            font-size: 40px;
+      		margin-bottom: 50px;
+            margin-top: 30px;
+        }
+
+        form {
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input {
+            margin-bottom: 10px;
+            padding: 15px;
+            font-size: 20px;
+        }
+
+        button {
+            padding: 10px;
+            font-size: 20px;
+        }
+        h4 {
+            text-align: center;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 30px;
+        }
+
+        #text {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        span {
+            font-size: 20px;
+        }
+    </style>
+</head>
     <body>
 	<div class="login">
 		<div class="login-screen">
+            <span id = "welcomePage">
+            <a href = "\"> Wróć do MENU </a>
+            </span>
 			<div class="app-title">
-				<h1>Podaj grę o której chcesz uzyskać informacje</h1>
+				<h1>Podaj grę o której chcesz uzyskać informacje:</h1>
 			</div>
             <form method = "POST" action="/gameInfo">
                 <label class="zasob-field-icon fui-zasob" for="zasob"></label>
-					<input type="text" placeholder="podaj nazwę gry" name="zasob" id="zasob" required>
+					<input type="text" placeholder="Podaj nazwę gry" name="zasob" id="zasob" required>
                 <button type="submit" id="infoButton" value="Wyszukaj"> Wyszukaj</button>
             </form>
                  <h4 id="slowo" color ='red'> Czy miałeś na myśli {{ slowo }} </h4>

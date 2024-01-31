@@ -1,8 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
+<head>
     <meta charset="UTF-8">
+    <style>
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        input {
+            margin-bottom: 10px;
+            padding: 15px;
+            font-size: 20px;
+        }
+
+        button {
+            margin-bottom: 30px;
+            padding: 10px;
+            font-size: 20px;
+        }
+
+        h1, h2 {
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 30px;
+        }
+
+        body {
+            font-family: 'Verdana', sans-serif;
+            align-items: center;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .control-group form {
+            margin-right: 60px;
+        }
+
+        .app-title {
+            font-size: 20px;
+      		margin-bottom: 50px;
+            margin-top: 30px;
+        }
+
+        span {
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
 	<div class="login">
 		<div class="login-screen">
+            <span id = "welcomePage">
+            <a href = "\"> Wróć do MENU </a>
+            </span>
 			<div class="app-title">
 				<h1>Na jakiej podstawie chciałbyś otrzymać rekomendacje?</h1>
 			</div>
@@ -12,17 +72,13 @@
 					    <input type="text" placeholder="Wpisz tytuł" name="title" id="title" value="{{ title }}" required>
                     <button type="submit" value="titleButton" class="btn btn-primary btn-large btn-block">Wyszukaj po tytule</button>
                 </form>
-            </div>
-            <div class="control-group">
                 <form action="/descriptionRecommendation" method="GET" id="descriptionForm">
                     <label class="genre-field-icon fui-genre" for="description"></label>
 					    <input type="text" placeholder="Wpisz opis" name="description" id="description" value="{{ description }}" required>
                     <button type="submit" value="descriptionButton" class="btn btn-primary btn-large btn-block">Wyszukaj po opisie</button>
                 </form>
-            </div>
-            <div class="control-group">
                 <form action="/genreRecommendation" method="GET" id="genreForm">
-                    <label class="genre-field-icon fui-genre" for="description"></label>
+                    <label class="genre-field-icon fui-genre" for="genre"></label>
 					    <input type="text" placeholder="Wpisz gatunek" name="genre" id="genre" value="{{ genre }}" required>
                     <button type="submit" value="genreButton" class="btn btn-primary btn-large btn-block">Wyszukaj po gatunku</button>
                 </form>
@@ -58,4 +114,5 @@
         </script>
     </div>
    </div>
+</body>
 </html>
